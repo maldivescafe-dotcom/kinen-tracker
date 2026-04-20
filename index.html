@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="禁煙">
+  <meta name="theme-color" content="#1a0e00">
+  <title>禁煙トラッカー</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+  <!-- ======== SETUP SCREEN ======== -->
+  <div id="setup-screen" class="setup-screen hidden">
+    <button class="btn-lang btn-lang-setup">EN</button>
+    <div class="setup-icon">🚬</div>
+    <h2 data-i18n="appTitle">禁煙トラッカー</h2>
+    <p data-i18n-html="setupDescHtml">禁煙の継続日数・節約金額・身体の回復を<br>毎日確認して、禁煙の歩みを支えます。</p>
+
+    <label for="start-date-input" data-i18n="quitDateLabel">禁煙開始日を選択</label>
+    <input type="date" id="start-date-input" class="date-input">
+
+    <label for="daily-cost-input" data-i18n="dailyCostLabel">1日あたりのタバコ代（円）</label>
+    <input type="number" id="daily-cost-input" class="date-input cost-input" placeholder="例：600" data-i18n-placeholder="dailyCostPlaceholder" min="0" step="100">
+
+    <button id="btn-start" class="btn-start" data-i18n="btnStart">禁煙を始める</button>
+  </div>
+
+  <!-- ======== MAIN SCREEN ======== -->
+  <div id="main-screen" class="hidden">
+
+    <header>
+      <h1 data-i18n="headerTitle">禁煙トラッカー</h1>
+      <button class="btn-lang">EN</button>
+    </header>
+
+    <!-- Streak -->
+    <div class="streak-card" id="streak-card">
+      <button id="btn-bg-toggle" class="btn-bg-toggle" title="背景を切り替え">🖼</button>
+      <div class="streak-label" data-i18n="streakLabel">継続中</div>
+      <div>
+        <span class="streak-days" id="streak-days">0</span>
+        <span class="streak-unit" data-i18n="streakUnit">日禁煙中</span>
+      </div>
+      <div class="streak-sub" data-i18n="streakSub">今日も続けています</div>
+      <div class="streak-start" id="streak-start"></div>
+    </div>
+
+    <!-- Savings Card -->
+    <div class="savings-card">
+      <div class="label" data-i18n="savingsLabel">タバコ代の節約額</div>
+      <div class="savings-amount" id="savings-amount">¥ 0</div>
+      <div class="savings-detail" id="savings-detail"></div>
+    </div>
+
+    <!-- Message -->
+    <div class="message-card">
+      <div class="label" data-i18n="messageLabel">今日の一言</div>
+      <div class="message-text" id="message-text"></div>
+    </div>
+
+    <!-- Effect -->
+    <div class="effect-card">
+      <div class="label" data-i18n="effectLabel">身体の回復効果</div>
+      <div class="effect-period" id="effect-period"></div>
+      <div class="effect-title" id="effect-title"></div>
+      <ul class="effect-list" id="effect-list"></ul>
+    </div>
+
+    <!-- Milestones -->
+    <div class="progress-section">
+      <div class="label" data-i18n="milestonesLabel">マイルストーン達成度</div>
+      <div class="milestones" id="milestones"></div>
+      <div class="next-milestone" id="next-milestone"></div>
+    </div>
+
+    <!-- Emergency Button -->
+    <div class="emergency-zone">
+      <button id="btn-emergency" class="btn-emergency">
+        <span class="emergency-icon">🆘</span>
+        <span data-i18n="emergencyBtn">タバコが吸いたい…</span>
+      </button>
+    </div>
+
+    <!-- Recommended Links -->
+    <div class="recommend-card">
+      <div class="label" data-i18n="recommendLabel">おすすめリンク</div>
+      <div class="recommend-sub" id="recommend-sub"></div>
+      <a class="recommend-link" id="recommend-link" href="#" target="_blank" rel="noopener">
+        <div class="recommend-icon" id="recommend-icon"></div>
+        <div class="recommend-info">
+          <div class="recommend-title" id="recommend-title"></div>
+          <div class="recommend-desc" id="recommend-desc"></div>
+        </div>
+        <div class="recommend-arrow">›</div>
+      </a>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+      <button id="btn-reset" class="btn btn-reset" data-i18n="btnReset">リセット</button>
+      <button id="btn-share" class="btn btn-share" data-i18n="btnShare">シェア</button>
+    </div>
+
+    <footer data-i18n="footer">一日一日の積み重ねが、あなたの身体を回復へ導く。</footer>
+  </div>
+
+  <!-- ======== EMERGENCY MODAL ======== -->
+  <div id="emergency-modal" class="modal-overlay">
+    <div class="modal modal-emergency">
+      <div class="emergency-modal-header">
+        <div class="emergency-modal-title" data-i18n="emergencyModalTitle">今すぐ試して</div>
+        <button id="btn-emergency-close" class="emergency-close">✕</button>
+      </div>
+      <div class="emergency-tip-card" id="emergency-tip-card">
+        <div class="tip-number" id="tip-number"></div>
+        <div class="tip-icon" id="tip-icon"></div>
+        <div class="tip-title" id="tip-title"></div>
+        <div class="tip-body" id="tip-body"></div>
+      </div>
+      <div class="emergency-nav">
+        <button id="btn-tip-prev" class="btn-tip-nav" data-i18n="btnPrev">‹ 前へ</button>
+        <div class="tip-dots" id="tip-dots"></div>
+        <button id="btn-tip-next" class="btn-tip-nav" data-i18n="btnNext">次へ ›</button>
+      </div>
+      <div class="emergency-affirmation" id="emergency-affirmation"></div>
+    </div>
+  </div>
+
+  <!-- ======== RESET MODAL ======== -->
+  <div id="reset-modal" class="modal-overlay">
+    <div class="modal">
+      <h3 data-i18n="resetTitle">記録をリセットしますか？</h3>
+      <p data-i18n-html="resetBodyHtml">現在の記録がすべて消えます。<br>本当にリセットしますか？</p>
+      <div class="modal-buttons">
+        <button id="btn-cancel" class="btn-cancel" data-i18n="btnCancel">キャンセル</button>
+        <button id="btn-confirm" class="btn-confirm" data-i18n="btnConfirm">リセットする</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
