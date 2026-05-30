@@ -770,8 +770,9 @@ function onShare() {
 
 const BG_STYLES = [
   "linear-gradient(135deg, rgba(26,14,0,0.5), rgba(180,83,9,0.35)), url('./bg-hero.png') center right/cover no-repeat",
-  "linear-gradient(135deg, rgba(26,14,0,0.5), rgba(180,83,9,0.35)), url('./bg-hero-male.jpg') center right/cover no-repeat",
-  'linear-gradient(135deg, #1a0e00, #431407)'
+  "linear-gradient(135deg, rgba(26,14,0,0.5), rgba(180,83,9,0.35)), url('./bg-hero-male-v2.jpg') center right/cover no-repeat",
+  'linear-gradient(135deg, #1a0e00, #431407)',
+  "linear-gradient(135deg, rgba(26,14,0,0.5), rgba(180,83,9,0.35)), url('./bg-hero-warm.jpg') center right/cover no-repeat"
 ];
 let bgIndex = parseInt(localStorage.getItem('kinen_bg') || '0');
 

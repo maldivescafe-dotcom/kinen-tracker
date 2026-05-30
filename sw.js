@@ -5,7 +5,9 @@ const ASSETS = [
   './app.js',
   './manifest.json',
   './bg-hero.png',
-  './bg-hero-male.jpg'
+  './bg-hero-male.jpg',
+  './bg-hero-male-v2.jpg',
+  './bg-hero-warm.jpg'
 ];
 
 self.addEventListener('install', e => {
